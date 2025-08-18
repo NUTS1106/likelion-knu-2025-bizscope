@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { Map } from "react-kakao-maps-sdk";
 import styled from "styled-components";
+import { useCurrentLocation } from "../Hooks/useCurrentLocation";
 
 const MapPageWrapper=styled.div`
     height:100%;
     width:100%;
     padding:32px;
+    gap:20px;
     display: flex;
     flex-direction:row;
 `
@@ -62,13 +65,12 @@ const SubmitButton=styled.button`
     color:white;
 `
 
-declare global {
-  interface Window {
-    // 일시적으로 막아놓기
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    kakao: any;
-  }
-}
+const KaKaoMap=styled(Map)`
+    width:100%;
+    height:100%;
+    border-radius:15px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
+`
 
 //예산
 //반경
@@ -77,26 +79,24 @@ declare global {
 interface Filters{
     category?:string;
     budget?:number;
-    district?:string;
-    footTraffic?:string;
+    district:string;
+    radius?:number;
 }
 
+interface Position{
+    lat:number;
+    lng:number;
+}
 
 function MapPage() {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const [filter, setFilter]=useState<Filters>({})
+  const {status, pos}=useCurrentLocation();
+  const [filter, setFilter]=useState<Filters>({district:"서울"})
+  const [center, setCenter]=useState<Position>({lat:37, lng:127})
 
-  useEffect(() => {
-    const { kakao } = window;
-    const map = new kakao.maps.Map(mapRef.current, {
-      center: new kakao.maps.LatLng(35.8714, 128.6014),
-      level: 5,
-    });
-    new kakao.maps.Marker({
-      position: new kakao.maps.LatLng(35.8714, 128.6014),
-      map,
-    });
-  }, []);
+  useEffect(()=>{
+    if(status==="ok")
+        setCenter(pos);
+  }, [pos, status])
 
   //각각의 인풋값이 바뀌면 filter 값이 바뀐다
   //추가적인 입력값 체크가 필요하면 수정필요
@@ -108,10 +108,14 @@ function MapPage() {
 
   const onSubmit=(e:FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
-    console.log(`category: ${filter.category}`);
-    console.log(`budget: ${filter.budget}`); 
-    console.log(`district: ${filter.district}`);
-    console.log(`footTraffic: ${filter.footTraffic}`);
+    const geocoder=new kakao.maps.services.Geocoder();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    geocoder.addressSearch(filter.district, (res: any[], status: string) => {
+        if (status !== kakao.maps.services.Status.OK || !res.length) return alert("주소를 찾지 못했습니다.");
+        const lat = parseFloat(res[0].y), lng = parseFloat(res[0].x);
+        console.log(`lat: ${lat} lng: ${lng}`);
+        setCenter({lat:lat, lng:lng});
+      });
   }
 
   return (
@@ -134,15 +138,15 @@ function MapPage() {
                     <SearchInput name="district" value={filter.district??""} onChange={onChange}/>
                 </SearchField>
                 <SearchField>
-                    <SearchLabel>유동인구</SearchLabel>
-                    <SearchInput name="footTraffic" value={filter.footTraffic??""} onChange={onChange}/>
+                    <SearchLabel>반경</SearchLabel>
+                    <SearchInput name="footTraffic" type="number" value={filter.radius??""} onChange={onChange}/>
                 </SearchField>
                 <SubmitButton type="submit">Apply Filter</SubmitButton>
             </SearchForm>
         </SearchWrapper>
-        <MapPageWrapper>
-                <div ref={mapRef} style={{ width: "900px", height: "480px" }} />
-        </MapPageWrapper>
+        <KaKaoMap center={{ lat: center.lat, lng: center.lng }}>
+                  
+        </KaKaoMap>
     </MapPageWrapper>
   );
 }
