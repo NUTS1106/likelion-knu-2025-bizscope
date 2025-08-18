@@ -139,7 +139,7 @@ function MapPage() {
                 </SearchField>
                 <SearchField>
                     <SearchLabel>반경</SearchLabel>
-                    <SearchInput name="footTraffic" type="number" value={filter.radius??""} onChange={onChange}/>
+                    <SearchInput name="radius" type="number" value={filter.radius??""} onChange={onChange}/>
                 </SearchField>
                 <SubmitButton type="submit">Apply Filter</SubmitButton>
             </SearchForm>
