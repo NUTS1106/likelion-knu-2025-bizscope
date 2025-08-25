@@ -4,7 +4,7 @@ import MapPage from "./Pages/MapPage";
 import ChartPage from "./Pages/ChartPage";
 import App from "./App";
 import NotFound from "./Pages/NotFound";
-import UserDashboard from "./Pages/UserDashboard"; // 👈 추가
+import UserDashboard from "./Pages/UserDashboard"; //추가
 
 const router = createBrowserRouter([
   {
