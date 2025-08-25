@@ -23,7 +23,7 @@ export const useCurrentLocation=()=>{
             setPos({lat:37, lng:127});
         }
     getCurrentLocation()
-    .then(({coords})=>{
+    .then(async ({coords})=>{
         setPos({lat:coords.latitude, lng:coords.longitude})
         setStatus("ok");
     })

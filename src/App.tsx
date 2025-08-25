@@ -1,20 +1,20 @@
-import { Outlet } from "react-router-dom"
-import Header from "./Components/Header"
-import styled from "styled-components"
+import { Outlet } from "react-router-dom";
+import Header from "./Components/Header";
+import styled from "styled-components";
 
-const Shell=styled.div`
-  height:100vh;
+const Shell = styled.div`
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-`
+`;
 
 function App() {
   return (
     <Shell>
-      <Header/>
-      <Outlet/>
+      <Header />
+      <Outlet />
     </Shell>
-  )
+  );
 }
 
-export default App
+export default App;

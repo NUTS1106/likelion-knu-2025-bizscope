@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
@@ -10,7 +9,9 @@ export default function UserDashboard() {
         <Logo>📊 DaeguBizInsights</Logo>
         <Nav>
           <StyledNavLink to="/dashboard">Dashboard</StyledNavLink>
-          <StyledNavLink to="/business">Business District Analysis</StyledNavLink>
+          <StyledNavLink to="/business">
+            Business District Analysis
+          </StyledNavLink>
           <StyledNavLink to="/report">Business Report</StyledNavLink>
         </Nav>
         <RightIcons>
@@ -78,12 +79,12 @@ export default function UserDashboard() {
 /* styled-components */
 
 const Container = styled.div`
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh; /* 뷰포트 높이에 맞춤 */
+  height: 100%; /* 뷰포트 높이에 맞춤 */
   background: #f7f7f7;
-  overflow-x: hidden; /* 가로 스크롤 제거 */
 `;
 
 const Header = styled.header`
@@ -146,8 +147,8 @@ const CardWrapper = styled.div`
 
 const Card = styled.div`
   flex: 1;
-  min-width: 280px;  /* 최소 크기 */
-  max-width: 32%;    /* 화면이 넓으면 3개 배치 */
+  min-width: 280px; /* 최소 크기 */
+  max-width: 32%; /* 화면이 넓으면 3개 배치 */
   background: #e6f0fa;
   padding: 20px;
   border-radius: 8px;

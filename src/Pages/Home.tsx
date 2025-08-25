@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { FaBell, FaChartBar, FaCog } from "react-icons/fa";
 import Calendar from "react-calendar";
@@ -7,10 +6,9 @@ import "react-calendar/dist/Calendar.css";
 export default function Home() {
   return (
     <Container>
-      {/* 사이드바 */}
       <Sidebar>
         <Nav>
-          <NavItem active>🏠 Home</NavItem>
+          <NavItem active>🏠 Main</NavItem>
           <NavItem>🔍 Explore</NavItem>
           <NavItem>📑 Business</NavItem>
           <NavItem>➕ Interactive</NavItem>
@@ -18,7 +16,6 @@ export default function Home() {
         </Nav>
         <BottomNav>
           <NavItem>⚙️ Preference</NavItem>
-          <NavItem>↩️ Log out</NavItem>
         </BottomNav>
       </Sidebar>
 
@@ -84,9 +81,15 @@ export default function Home() {
 
         <PanelCard>
           <CardTitle>Reports</CardTitle>
-          <ReportItem>📊 Quarterly Review <span>95</span></ReportItem>
-          <ReportItem>💰 Sales <span>85</span></ReportItem>
-          <ReportItem>📈 Financial Metrics <span>45</span></ReportItem>
+          <ReportItem>
+            📊 Quarterly Review <span>95</span>
+          </ReportItem>
+          <ReportItem>
+            💰 Sales <span>85</span>
+          </ReportItem>
+          <ReportItem>
+            📈 Financial Metrics <span>45</span>
+          </ReportItem>
         </PanelCard>
 
         <PanelCard>
@@ -101,9 +104,10 @@ export default function Home() {
 /* ---------------- Styled Components ---------------- */
 
 const Container = styled.div`
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: 220px 1fr 320px; /* 사이드바 / 메인 / 오른쪽 */
-  height: 100vh;
+  height: 100%;
   background: #f9fafb;
 `;
 
@@ -113,12 +117,6 @@ const Sidebar = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 20px 12px;
-`;
-
-const Logo = styled.h1`
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 20px;
 `;
 
 const Nav = styled.div`
