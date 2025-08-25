@@ -11,6 +11,12 @@ export type Filters={
   radius:number;
 }
 
+export type AnalysisType={
+  lat:number;
+  lon:number;
+  radius_m:number;
+}
+
 export type MarkerInfo={
     suitability_score?:number;
     reasoning?: {
